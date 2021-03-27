@@ -12,6 +12,21 @@ import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import FiltersScreen from "../screens/FiltersScreen";
+
+const defaultStackNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+  },
+  headerTitleStyle: {
+    fontFamily: "open-sans-bold",
+  },
+  headerBackTitleStyle: {
+    fontFamily: "open-sans",
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
+  headerTitle: "A Screen",
+};
 
 const MealsNavigator = createStackNavigator(
   {
@@ -36,7 +51,7 @@ const MealsNavigator = createStackNavigator(
   }
 );
 
-const MealsFavNavigator = createBottomTabNavigator(
+const MealsFavTabNavigator = createBottomTabNavigator(
   {
     Meals: {
       screen: MealsNavigator,
@@ -73,4 +88,36 @@ const MealsFavNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(MealsFavNavigator);
+const FiltersNavigator = createStackNavigator(
+  {
+    Filters: FiltersScreen,
+  },
+  {
+    // navigationOptions: {
+    //   drawerLabel: 'Filters!!!!'
+    // },
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const MainNavigator = createDrawerNavigator(
+  {
+    MealsFavs: {
+      screen: MealsFavTabNavigator,
+      navigationOptions: {
+        drawerLabel: "Meals",
+      },
+    },
+    Filters: FiltersNavigator,
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.accentColor,
+      labelStyle: {
+        fontFamily: "open-sans-bold",
+      },
+    },
+  }
+);
+
+export default createAppContainer(MainNavigator);
