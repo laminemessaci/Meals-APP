@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import React from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 
-import MealItem from './MealItem';
+import MealItem from "./MealItem";
 
-const MealList = props => {
-  const renderMealItem = itemData => {
+const MealList = (props) => {
+  const renderMealItem = (itemData) => {
     return (
       <MealItem
         title={itemData.item.title}
@@ -14,10 +14,11 @@ const MealList = props => {
         affordability={itemData.item.affordability}
         onSelectMeal={() => {
           props.navigation.navigate({
-            routeName: 'MealDetail',
+            routeName: "MealDetail",
             params: {
-              mealId: itemData.item.id
-            }
+              mealId: itemData.item.id,
+              mealTitle: itemData.item.title,
+            },
           });
         }}
       />
@@ -30,7 +31,7 @@ const MealList = props => {
         data={props.listData}
         keyExtractor={(item, index) => item.id}
         renderItem={renderMealItem}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       />
     </View>
   );
@@ -39,10 +40,10 @@ const MealList = props => {
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 15,
+  },
 });
 
 export default MealList;
